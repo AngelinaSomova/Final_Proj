@@ -3,9 +3,7 @@ from tkinter import ttk
 import sqlite3
 
 
-
-
-#создаем приложение(окно)
+# создаем приложение(окно)
 class Main(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
@@ -13,7 +11,7 @@ class Main(tk.Frame):
         self.db = db
         self.view_records()
 
-    #Метод для хранения и инициализации объектов графического интерфейса
+    # Метод для хранения и инициализации объектов графического интерфейса
     def init_main(self):
         # создаем панель инструментов (тулбар)
         toolbar = tk.Frame(bg='#d7d8e0', bd=2)
@@ -28,13 +26,13 @@ class Main(tk.Frame):
 
         # создание кнопки изменения данных
         self.update_img = tk.PhotoImage(file='./img/update.png')
-        btn_edit_dialog = tk.Button(toolbar, bg='#d7d8e0', bd=0, 
+        btn_edit_dialog = tk.Button(toolbar, bg='#d7d8e0', bd=0,
                                     image=self.update_img, command=self.open_update_dialog)
         btn_edit_dialog.pack(side=tk.LEFT)
 
         # создание кнопки удаления записи
         self.delete_img = tk.PhotoImage(file='./img/delete.png')
-        btn_delete = tk.Button(toolbar, bg='#d7d8e0', bd=0, 
+        btn_delete = tk.Button(toolbar, bg='#d7d8e0', bd=0,
                                image=self.delete_img, command=self.delete_records)
         btn_delete.pack(side=tk.LEFT)
 
@@ -46,26 +44,26 @@ class Main(tk.Frame):
 
         # кнопка обновления
         self.refresh_img = tk.PhotoImage(file='./img/refresh.png')
-        btn_refresh = tk.Button(toolbar, bg='#d7d8e0', bd=0, 
+        btn_refresh = tk.Button(toolbar, bg='#d7d8e0', bd=0,
                                 image=self.refresh_img, command=self.view_records)
         btn_refresh.pack(side=tk.LEFT)
 
         # Добавляем Treeview
         self.tree = ttk.Treeview(self, columns=('ID', 'name', 'tel', 'email', 'salary'),
                                  height=45, show='headings')
-        
+
         # добавляем параметры колонкам
-        self.tree.column("ID", width=30, anchor=tk.CENTER)
+        self.tree.column("ID", width=160, anchor=tk.CENTER)
         self.tree.column("name", width=300, anchor=tk.CENTER)
         self.tree.column("tel", width=150, anchor=tk.CENTER)
         self.tree.column("email", width=150, anchor=tk.CENTER)
         self.tree.column("salary", width=150, anchor=tk.CENTER)
 
         # подписи колонок
-        self.tree.heading("ID", text='ID')
+        self.tree.heading("ID", text='Индефикационный номер')
         self.tree.heading("name", text='ФИО')
         self.tree.heading("tel", text='Телефон')
-        self.tree.heading("email", text='E-mail')
+        self.tree.heading("email", text='Почта')
         self.tree.heading("salary", text='Зарплата')
 
         # упаковка
@@ -96,7 +94,7 @@ class Main(tk.Frame):
         # добавляем в виджет таблицы всю информацию из БД
         [self.tree.insert('', 'end', values=row)
          for row in self.db.c.fetchall()]
-        
+
     # удаление записей
     def delete_records(self):
         # цикл по выделенным записям
@@ -129,6 +127,7 @@ class Main(tk.Frame):
     # метод отвечающий за вызов окна для поиска
     def open_search_dialog(self):
         Search()
+
 
 # класс дочерних окон
 # Toplevel - окно верхнего уровня
@@ -192,7 +191,7 @@ class Child(tk.Toplevel):
                                                                        self.entry_email.get(),
                                                                        self.entry_tel.get(),
                                                                        self.entry_wage.get()))
-    
+
 
 # класс окна для обновления, наследуемый от класса дочернего окна
 class Update(Child):
@@ -250,9 +249,9 @@ class Search(tk.Toplevel):
 
         btn_search = ttk.Button(self, text='Поиск')
         btn_search.place(x=105, y=50)
-        btn_search.bind('<Button-1>', 
+        btn_search.bind('<Button-1>',
                         lambda event: self.view.search_records(self.entry_search.get()))
-        btn_search.bind('<Button-1>', 
+        btn_search.bind('<Button-1>',
                         lambda event: self.destroy(), add='+')
 
 
@@ -272,10 +271,8 @@ class DB:
     # метод добавления в БД
     def insert_data(self, name, tel, email, salary):
         self.c.execute('''INSERT INTO db (name, tel, email, salary) VALUES (?, ?, ?, ?)''',
-                       (name, tel, email,salary))
+                       (name, tel, email, salary))
         self.conn.commit()
-
-
 
 
 if __name__ == '__main__':
@@ -287,7 +284,7 @@ if __name__ == '__main__':
     # заголовок окна
     root.title('Список сотрудников компании')
     # размер окна
-    root.geometry('800x600')
+    root.geometry('1366x768')
     # ограничение изменения размеров окна
     root.resizable(False, False)
     root.mainloop()
