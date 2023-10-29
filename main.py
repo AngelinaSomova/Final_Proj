@@ -284,7 +284,7 @@ if __name__ == '__main__':
     # заголовок окна
     root.title('Список сотрудников компании')
     # размер окна
-    root.geometry('1366x768')
+    root.geometry('910x768')
     # ограничение изменения размеров окна
     root.resizable(False, False)
     root.mainloop()
